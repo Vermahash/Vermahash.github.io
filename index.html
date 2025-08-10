@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Harsh Verma — Data Science & AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0c0c0c;--fg:#eaeaea;--muted:#a1a1a1;--accent:#f2b135;--card:#121212;--line:#1e1e1e}
+    *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Poppins,system-ui,Segoe UI,Arial}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+    /* Nav */
+    .nav{position:sticky;top:0;z-index:50;background:rgba(12,12,12,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{font-weight:800;letter-spacing:.5px}
+    .menu a{margin-left:20px;font-weight:600;color:var(--muted)}
+    .menu a.active,.menu a:hover{color:var(--accent)}
+    /* Hero */
+    .hero{padding:72px 0 40px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+    .tag{color:var(--accent);font-weight:700;letter-spacing:.12em;margin-bottom:8px}
+    h1{font-size:48px;line-height:1.1;margin:0 0 8px}
+    .lead{color:var(--muted);font-size:18px;margin-bottom:24px}
+    .btn{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid var(--line);font-weight:600}
+    .btn-primary{background:var(--accent);color:#111;border:0}
+    .btn + .btn{margin-left:12px}
+    .hero-img{justify-self:end;border-radius:18px;overflow:hidden;background:#000}
+    /* Section */
+    section{padding:56px 0;border-top:1px solid var(--line)}
+    section h2{margin:0 0 18px;font-size:28px}
+    .muted{color:var(--muted)}
+    /* About */
+    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+    .kv{display:grid;grid-template-columns:140px 1fr;gap:8px;margin-top:10px}
+    .kv div{padding:6px 0;border-bottom:1px dashed var(--line)}
+    /* Skills */
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{padding:8px 12px;background:#111;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-weight:600}
+    /* Projects */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .proj{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column}
+    .proj h3{margin:6px 0 6px;font-size:18px}
+    .proj p{margin:0 0 10px;color:var(--muted);font-size:14px}
+    .proj .meta{margin-top:auto;display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+    /* Contact */
+    .links a{display:inline-block;margin-right:14px;color:var(--muted)}
+    .links a:hover{color:var(--accent)}
+    /* Footer */
+    footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--line);text-align:center}
+    /* Responsive */
+    @media (max-width:960px){.hero{grid-template-columns:1fr}.hero-img{order:-1;justify-self:center;max-width:360px}}
+    @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.about{grid-template-columns:1fr}.grid{grid-template-columns:1fr} h1{font-size:36px}}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="wrap nav-inner">
+      <div class="brand">HARSH VERMA</div>
+      <div class="menu">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="Harsh_Verma_Resume.pdf" class="btn btn-primary">Resume</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="home" class="wrap hero">
+    <div>
+      <div class="tag">HELLO!</div>
+      <h1>I’m <span style="color:var(--accent)">Harsh Verma</span></h1>
+      <p class="lead">Data Science & GenAI — I build practical AI systems: RAG chatbots, ML apps, and analytics that drive decisions.</p>
+      <a class="btn btn-primary" href="#contact">Connect with me</a>
+      <a class="btn" href="#projects">My projects</a>
+    </div>
+    <div class="hero-img">
+      <!-- replace with your PNG/JPG (transparent PNG looks best) -->
+      <img src="portrait.png" alt="Harsh Verma headshot">
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about">
+      <div class="card">
+        <h2>About Me</h2>
+        <p class="muted">MS in Business Analytics. Ex‑Deloitte & Altice USA. Focused on LLM apps, RAG, and end‑to‑end ML delivery.</p>
+        <div class="kv">
+          <div>Name:</div><div>Harsh Verma</div>
+          <div>Email:</div><div><a href="mailto:hverma4@pride.hofstra.edu">hverma4@pride.hofstra.edu</a></div>
+          <div>Location:</div><div>Uniondale, NY</div>
+          <div>LinkedIn:</div><div><a href="https://www.linkedin.com/in/veharsh">linkedin.com/in/veharsh</a></div>
+          <div>GitHub:</div><div><a href="https://github.com/Vermahash">github.com/Vermahash</a></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Competencies</h2>
+        <p class="muted">LLMs/RAG, MLOps, analytics storytelling, stakeholder engagement.</p>
+        <div class="chips">
+          <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LLaMA 3</span>
+          <span class="chip">FAISS</span><span class="chip">Sentence-Transformers</span><span class="chip">FastAPI</span>
+          <span class="chip">Streamlit</span><span class="chip">Power BI</span><span class="chip">Tableau</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <p class="muted">Python, SQL, R • Pandas, NumPy, scikit‑learn, PyTorch • LangChain, FAISS, Chroma, sentence‑transformers •
+        FastAPI, Flask • Docker, AWS (EC2, S3, Lambda) • Tableau, Power BI</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <div class="grid">
+        <article class="proj">
+          <h3>Domain‑Adaptive RAG Chatbot</h3>
+          <p>Offline LLaMA 3 + LangChain chatbot. Ingests PDFs (medical textbook now) and adapts to any deep‑knowledge domain.</p>
+          <div class="meta">
+            <a href="https://github.com/Vermahash/pdf_chatbot">GitHub →</a>
+            <span>Flask · FAISS</span>
+          </div>
+        </article>
+        <article class="proj">
+          <h3>Insurance Premium Estimator</h3>
+          <p>Streamlit UI + FastAPI backend. Deployed regression model (R²≈0.75) for real‑time quotes.</p>
+          <div class="meta">
+            <a href="https://github.com/Vermahash/FastAPI_ML">GitHub →</a>
+            <span>Streamlit · FastAPI</span>
+          </div>
+        </article>
+        <article class="proj">
+          <h3>News Scrape & LLM Summaries</h3>
+          <p>Scrapes NPR, summarizes with BART, sentiment via VADER, outputs bullet reports.</p>
+          <div class="meta">
+            <a href="#">Repo →</a>
+            <span>HuggingFace · NLTK</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="muted">Open to Data Science / ML / GenAI roles.</p>
+      <div class="links">
+        <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
+        <a href="https://www.linkedin.com/in/veharsh">LinkedIn</a>
+        <a href="https://github.com/Vermahash">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">© <span id="y"></span> Harsh Verma</div>
+  </footer>
+
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>
