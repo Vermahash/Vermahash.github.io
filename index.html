@@ -5,171 +5,334 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Harsh Verma — Data Science & AI</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#0c0c0c;--fg:#eaeaea;--muted:#a1a1a1;--accent:#f2b135;--card:#121212;--line:#1e1e1e}
-    *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Poppins,system-ui,Segoe UI,Arial}
-    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
-    /* Nav */
-    .nav{position:sticky;top:0;z-index:50;background:rgba(12,12,12,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{font-weight:800;letter-spacing:.5px}
-    .menu a{margin-left:20px;font-weight:600;color:var(--muted)}
-    .menu a.active,.menu a:hover{color:var(--accent)}
-    /* Hero */
-    .hero{padding:72px 0 40px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
-    .tag{color:var(--accent);font-weight:700;letter-spacing:.12em;margin-bottom:8px}
-    h1{font-size:48px;line-height:1.1;margin:0 0 8px}
-    .lead{color:var(--muted);font-size:18px;margin-bottom:24px}
-    .btn{display:inline-block;padding:12px 16px;border-radius:10px;border:1px solid var(--line);font-weight:600}
-    .btn-primary{background:var(--accent);color:#111;border:0}
-    .btn + .btn{margin-left:12px}
-    .hero-img{justify-self:end;border-radius:18px;overflow:hidden;background:#000}
-    /* Section */
-    section{padding:56px 0;border-top:1px solid var(--line)}
-    section h2{margin:0 0 18px;font-size:28px}
-    .muted{color:var(--muted)}
-    /* About */
-    .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-    .kv{display:grid;grid-template-columns:140px 1fr;gap:8px;margin-top:10px}
-    .kv div{padding:6px 0;border-bottom:1px dashed var(--line)}
-    /* Skills */
-    .chips{display:flex;flex-wrap:wrap;gap:10px}
-    .chip{padding:8px 12px;background:#111;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-weight:600}
-    /* Projects */
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .proj{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column}
-    .proj h3{margin:6px 0 6px;font-size:18px}
-    .proj p{margin:0 0 10px;color:var(--muted);font-size:14px}
-    .proj .meta{margin-top:auto;display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
-    /* Contact */
-    .links a{display:inline-block;margin-right:14px;color:var(--muted)}
-    .links a:hover{color:var(--accent)}
-    /* Footer */
-    footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--line);text-align:center}
-    /* Responsive */
-    @media (max-width:960px){.hero{grid-template-columns:1fr}.hero-img{order:-1;justify-self:center;max-width:360px}}
-    @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
-    @media (max-width:640px){.about{grid-template-columns:1fr}.grid{grid-template-columns:1fr} h1{font-size:36px}}
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body>
-  <!-- NAV -->
-  <div class="nav">
-    <div class="wrap nav-inner">
-      <div class="brand">HARSH VERMA</div>
-      <div class="menu">
-        <a href="#home" class="active">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <a href="Harsh_Verma_Resume.pdf" class="btn btn-primary">Resume</a>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <div class="brand">HARSH VERMA</div>
+    <div class="menu" id="mainNav">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a href="assets/resume/Harsh_Verma_Resume_Data_Science.pdf" class="btn btn-primary">Resume</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="wrap hero hero--glow">
+  <div class="reveal">
+    <div class="tag">HELLO!</div>
+    <h1>I’m <span class="accent">Harsh Verma</span></h1>
+    <p class="lead">Data Science & GenAI — I build practical AI systems: RAG chatbots, ML apps, and analytics that drive decisions.</p>
+    <a class="btn btn-primary bump" href="#contact">Connect with me</a>
+    <a class="btn bump" href="#projects">My projects</a>
+  </div>
+
+  <div class="hero-img profile-pic reveal">
+    <img src="assets/img/Photo7.png" alt="Harsh Verma headshot">
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about">
+    <div class="card lift reveal">
+      <h2>About Me</h2>
+      <p class="muted">MS in Business Analytics. Ex-Deloitte & Altice USA. Focused on LLM apps, RAG, and end-to-end ML delivery.</p>
+      <div class="kv">
+        <div>Name:</div><div>Harsh Verma</div>
+        <div>Email:</div><div><a href="mailto:hverma4@pride.hofstra.edu">hverma4@pride.hofstra.edu</a></div>
+        <div>Location:</div><div>Uniondale, NY</div>
+        <div>LinkedIn:</div><div><a href="https://www.linkedin.com/in/veharsh">linkedin.com/in/veharsh</a></div>
+        <div>GitHub:</div><div><a href="https://github.com/Vermahash">github.com/Vermahash</a></div>
+      </div>
+    </div>
+
+    <div class="card lift reveal">
+      <h2>Competencies</h2>
+      <p class="muted">LLMs/RAG • ML • Data Engineering • Cloud & BI</p>
+      <div class="chips">
+        <!-- LLM/RAG -->
+        <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LLaMA 3</span>
+        <span class="chip">FAISS</span><span class="chip">sentence-transformers</span>
+        <!-- ML/AI -->
+        <span class="chip">Python</span><span class="chip">scikit-learn</span><span class="chip">PyTorch</span>
+        <span class="chip">XGBoost</span><span class="chip">TensorFlow</span>
+        <!-- DE/MLOps -->
+        <span class="chip">Spark</span><span class="chip">PySpark</span><span class="chip">Airflow</span>
+        <span class="chip">dbt</span><span class="chip">Docker</span><span class="chip">MLflow</span>
+        <!-- API & Apps -->
+        <span class="chip">FastAPI</span><span class="chip">Streamlit</span>
+        <!-- Cloud/BI -->
+        <span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">GCP</span><span class="chip">Snowflake</span>
+        <span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">SQL</span>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- HERO -->
-  <section id="home" class="wrap hero">
-    <div>
-      <div class="tag">HELLO!</div>
-      <h1>I’m <span style="color:var(--accent)">Harsh Verma</span></h1>
-      <p class="lead">Data Science & GenAI — I build practical AI systems: RAG chatbots, ML apps, and analytics that drive decisions.</p>
-      <a class="btn btn-primary" href="#contact">Connect with me</a>
-      <a class="btn" href="#projects">My projects</a>
-    </div>
-    <div class="hero-img">
-      <!-- replace with your PNG/JPG (transparent PNG looks best) -->
-      <img src="https://drive.google.com/uc?export=view&id=1vbKZjYdOT03dAymxpbmkMx4Jpvk7JPO7" alt="Harsh Verma headshot">
-    </div>
-  </section>
+<!-- SKILLS MATRIX -->
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills Matrix</h2>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="wrap about">
-      <div class="card">
-        <h2>About Me</h2>
-        <p class="muted">MS in Business Analytics. Ex‑Deloitte & Altice USA. Focused on LLM apps, RAG, and end‑to‑end ML delivery.</p>
-        <div class="kv">
-          <div>Name:</div><div>Harsh Verma</div>
-          <div>Email:</div><div><a href="mailto:hverma4@pride.hofstra.edu">hverma4@pride.hofstra.edu</a></div>
-          <div>Location:</div><div>Uniondale, NY</div>
-          <div>LinkedIn:</div><div><a href="https://www.linkedin.com/in/veharsh">linkedin.com/in/veharsh</a></div>
-          <div>GitHub:</div><div><a href="https://github.com/Vermahash">github.com/Vermahash</a></div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Competencies</h2>
-        <p class="muted">LLMs/RAG, MLOps, analytics storytelling, stakeholder engagement.</p>
+    <div class="skills-grid">
+      <!-- Languages & Query -->
+      <article class="skills-card lift reveal">
+        <h3>Languages & Query</h3>
         <div class="chips">
-          <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LLaMA 3</span>
-          <span class="chip">FAISS</span><span class="chip">Sentence-Transformers</span><span class="chip">FastAPI</span>
-          <span class="chip">Streamlit</span><span class="chip">Power BI</span><span class="chip">Tableau</span>
+          <button class="chip"><span>Python</span></button>
+          <button class="chip"><span>SQL</span></button>
+          <button class="chip"><span>R</span></button>
+          <button class="chip"><span>Java</span></button>
+          <button class="chip"><span>Excel</span></button>
         </div>
-      </div>
+      </article>
+
+      <!-- ML / AI -->
+      <article class="skills-card lift reveal">
+        <h3>ML / AI</h3>
+        <div class="chips">
+          <button class="chip"><span>scikit-learn</span></button>
+          <button class="chip"><span>PyTorch</span></button>
+          <button class="chip"><span>XGBoost</span></button>
+          <button class="chip"><span>TensorFlow</span></button>
+          <button class="chip"><span>LangChain</span></button>
+          <button class="chip"><span>sentence-transformers</span></button>
+        </div>
+      </article>
+
+      <!-- Data Engineering -->
+      <article class="skills-card lift reveal">
+        <h3>Data Engineering</h3>
+        <div class="chips">
+          <button class="chip"><span>Spark</span></button>
+          <button class="chip"><span>PySpark</span></button>
+          <button class="chip"><span>Airflow</span></button>
+          <button class="chip"><span>dbt</span></button>
+          <button class="chip"><span>Docker</span></button>
+          <button class="chip"><span>MLflow</span></button>
+        </div>
+      </article>
+
+      <!-- Cloud & BI -->
+      <article class="skills-card lift reveal">
+        <h3>Cloud & BI</h3>
+        <div class="chips">
+          <button class="chip"><span>AWS</span></button>
+          <button class="chip"><span>Azure</span></button>
+          <button class="chip"><span>GCP</span></button>
+          <button class="chip"><span>Snowflake</span></button>
+          <button class="chip"><span>Power BI</span></button>
+          <button class="chip"><span>Tableau</span></button>
+        </div>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="wrap">
-      <h2>Skills</h2>
-      <p class="muted">Python, SQL, R • Pandas, NumPy, scikit‑learn, PyTorch • LangChain, FAISS, Chroma, sentence‑transformers •
-        FastAPI, Flask • Docker, AWS (EC2, S3, Lambda) • Tableau, Power BI</p>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+    <ol class="timeline">
+      <li class="tl-item lift reveal">
+        <div class="tl-head">
+          <div class="role">Data Analytics, Strategic Program Office</div>
+          <div class="org">Optimum (Altice USA) • Long Island City, NY</div>
+          <div class="date">Feb 2025 – May 2025</div>
+        </div>
+        <ul class="tl-bullets">
+          <li>Automated executive Power BI dashboards with SQL/Python ETL, cutting reporting time by <b>70%</b> and enabling real-time KPI visibility for leadership.</li>
+          <li>Designed predictive ROI-risk model surfacing shortfalls <b>8 weeks early</b> across 5+ channels.</li>
+          <li>Built VBA automation uniting FP&A and operations for ROI forecasts on <b>$20M+</b> initiatives; automated refresh/validation reduced manual errors <b>90%</b>.</li>
+          <li>Drove KPI standardization and adoption (↑ <b>60%</b>) across cross-functional teams.</li>
+        </ul>
+      </li>
+
+      <li class="tl-item lift reveal">
+        <div class="tl-head">
+          <div class="role">Data Analyst (Workday Practice)</div>
+          <div class="org">Deloitte (Offices of the US) • India</div>
+          <div class="date">May 2021 – Aug 2023</div>
+        </div>
+        <ul class="tl-bullets">
+          <li>Migrated <b>1M+</b> records for AT&T/Wells Fargo with custom ETL to Workday at <b>98%</b> accuracy; automated 100+ SQL scripts (− <b>40%</b> processing time).</li>
+          <li>Built error-detection & monitoring to cut mismatches (− <b>25%</b>) and reduce support tickets; defect tracking dashboards reduced manual effort <b>50%</b>.</li>
+          <li>Served as SME, and launched a knowledge hub to onboard teams faster and standardize data processes.</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <h2>Featured Projects</h2>
+
+    <div class="grid projects-grid">
+      <!-- 1 pdf_chatbot -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--dark"></div>
+        <h3>Domain-Adaptive RAG Chatbot</h3>
+        <p>Offline LLaMA-3 + LangChain chatbot that ingests PDFs and adapts to any deep-knowledge domain. Flask backend, sentence-transformer embeddings.</p>
+        <div class="tags"><span>Python</span><span>LangChain</span><span>FAISS</span><span>Flask</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/pdf_chatbot" target="_blank" rel="noopener">Code →</a>
+          <span>Local-first • RAG</span>
+        </div>
+      </article>
+
+      <!-- 2 FastAPI_ML -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--teal"></div>
+        <h3>Insurance Premium Estimator</h3>
+        <p>Regression model (R² ≈ 0.75) deployed with a Streamlit UI and FastAPI backend for real-time quotes; demonstrates full ML lifecycle and API deployment.</p>
+        <div class="tags"><span>Streamlit</span><span>FastAPI</span><span>scikit-learn</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/FastAPI_ML" target="_blank" rel="noopener">Code →</a>
+          <span>App • MLOps</span>
+        </div>
+      </article>
+
+      <!-- 3 Web_Scrapping -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--magenta"></div>
+        <h3>News Scraping & LLM Summaries</h3>
+        <p>Scrapes NPR, summarizes with BART, analyzes sentiment with VADER, and delivers concise bullet reports with links.</p>
+        <div class="tags"><span>Python</span><span>BART</span><span>NLTK VADER</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/Web_Scrapping" target="_blank" rel="noopener">Code →</a>
+          <span>NLP • Automation</span>
+        </div>
+      </article>
+
+      <!-- 4 Ensemble Unsupervised -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--purple"></div>
+        <h3>Ensemble Methods — Unsupervised</h3>
+        <p>Explores clustering/unsupervised ensembles with robust preprocessing and evaluation pipelines.</p>
+        <div class="tags"><span>Python</span><span>scikit-learn</span><span>EDA</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/Machine-Learning-Ensemble-Methods-Unsupervised-Learning" target="_blank" rel="noopener">Code →</a>
+          <span>ML</span>
+        </div>
+      </article>
+
+      <!-- 5 Multiclass -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--blue"></div>
+        <h3>Multi-class Classification</h3>
+        <p>Clean, reproducible notebook covering multi-class classification with tuned baselines and explainability.</p>
+        <div class="tags"><span>scikit-learn</span><span>XGBoost</span><span>EDA</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/Machine-Learning-Multiclass-Classification-Project" target="_blank" rel="noopener">Code →</a>
+          <span>ML</span>
+        </div>
+      </article>
+
+      <!-- 6 R_Project -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--mint"></div>
+        <h3>R Profile Prediction</h3>
+        <p>R-based modeling workflow (multiple models) for profile prediction with tidy evaluation.</p>
+        <div class="tags"><span>R</span><span>tidyverse</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/R_Project" target="_blank" rel="noopener">Code →</a>
+          <span>R</span>
+        </div>
+      </article>
+
+      <!-- 7 Tableau -->
+      <article class="proj lift reveal">
+        <div class="thumb thumb--slate"></div>
+        <h3>Tableau Storytelling</h3>
+        <p>Interactive dashboards for nationwide trends & KPI storytelling (e.g., U.S. Police Shootings analysis).</p>
+        <div class="tags"><span>Tableau</span><span>Data Viz</span></div>
+        <div class="meta">
+          <a href="https://github.com/Vermahash/Tableau" target="_blank" rel="noopener">Workbooks →</a>
+          <span>Storytelling</span>
+        </div>
+      </article>
     </div>
-  </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="wrap">
-      <h2>Projects</h2>
-      <div class="grid">
-        <article class="proj">
-          <h3>Domain‑Adaptive RAG Chatbot</h3>
-          <p>Offline LLaMA 3 + LangChain chatbot. Ingests PDFs (medical textbook now) and adapts to any deep‑knowledge domain.</p>
-          <div class="meta">
-            <a href="https://github.com/Vermahash/pdf_chatbot">GitHub →</a>
-            <span>Flask · FAISS</span>
-          </div>
-        </article>
-        <article class="proj">
-          <h3>Insurance Premium Estimator</h3>
-          <p>Streamlit UI + FastAPI backend. Deployed regression model (R²≈0.75) for real‑time quotes.</p>
-          <div class="meta">
-            <a href="https://github.com/Vermahash/FastAPI_ML">GitHub →</a>
-            <span>Streamlit · FastAPI</span>
-          </div>
-        </article>
-        <article class="proj">
-          <h3>News Scrape & LLM Summaries</h3>
-          <p>Scrapes NPR, summarizes with BART, sentiment via VADER, outputs bullet reports.</p>
-          <div class="meta">
-            <a href="#">Repo →</a>
-            <span>HuggingFace · NLTK</span>
-          </div>
-        </article>
-      </div>
+    <p class="muted" style="margin-top:14px">See more on <a class="accent" href="https://github.com/Vermahash?tab=repositories" target="_blank" rel="noopener">GitHub →</a></p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="muted">Open to Data Science / ML / GenAI roles.</p>
+    <div class="links">
+      <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
+      <a href="https://www.linkedin.com/in/veharsh">LinkedIn</a>
+      <a href="https://github.com/Vermahash">GitHub</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="wrap">
-      <h2>Contact</h2>
-      <p class="muted">Open to Data Science / ML / GenAI roles.</p>
-      <div class="links">
-        <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
-        <a href="https://www.linkedin.com/in/veharsh">LinkedIn</a>
-        <a href="https://github.com/Vermahash">GitHub</a>
-      </div>
-    </div>
-  </section>
+<footer>
+  <div class="wrap">© <span id="y"></span> Harsh Verma</div>
+</footer>
 
-  <footer>
-    <div class="wrap">© <span id="y"></span> Harsh Verma</div>
-  </footer>
+<div class="scroll-progress" id="progress"></div>
 
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+<script>
+  // year
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // scroll progress
+  const prog = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    prog.style.width = pct + '%';
+  });
+
+  // active link on scroll
+  const nav = document.getElementById('mainNav');
+  const navLinks = Array.from(nav.querySelectorAll('a[href^="#"]'));
+  const linkById = new Map(navLinks.map(a => [a.getAttribute('href').slice(1), a]));
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+
+  const setActive = id => {
+    navLinks.forEach(a => a.classList.remove('active'));
+    const link = linkById.get(id);
+    if (link) link.classList.add('active');
+    sections.forEach(s => s.classList.remove('active-section'));
+    const current = document.getElementById(id);
+    if (current) current.classList.add('active-section');
+  };
+
+  const io = new IntersectionObserver(entries => {
+    let top = null;
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      if (!top || e.intersectionRatio > top.intersectionRatio) top = e;
+      // reveal animation
+      if (e.target.classList.contains('reveal')) {
+        if (e.isIntersecting) e.target.classList.add('in-view');
+      }
+    }
+    if (top) setActive(top.target.id);
+  }, { threshold: [0.25, 0.5, 0.85], rootMargin: "-10% 0px -40% 0px" });
+
+  sections.forEach(s => io.observe(s));
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  window.addEventListener('load', () => {
+    const id = location.hash.slice(1);
+    if (id && document.getElementById(id)) setActive(id);
+  });
+</script>
 </body>
 </html>
