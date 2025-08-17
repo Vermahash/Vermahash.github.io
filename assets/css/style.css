@@ -2,12 +2,18 @@
    THEME + BASE
 ========================= */
 :root{
-  --bg:#111111;
-  --bg-elev:#161616;
-  --fg:#eaeaea;
-  --muted:#a1a1a1;
-  --accent:#ff9800;
-  --line:#222222;
+
+   --bg-color: #FAF3E0;        /* beige background */
+  --text-color: #EAEAEA;      /* your chosen text color */
+  --accent-color: #2E8B57;    /* main green */
+  --secondary-color: #EDE6D6; /* softer beige */
+  --hover-color: #006400;
+  #--bg:#111111;
+  #--bg-elev:#161616;
+  #--fg:#eaeaea;
+  #--muted:#a1a1a1;
+  #--accent:#ff9800;
+  #--line:#222222;
 
   --elev-0: 0 0 0 rgba(0,0,0,0);
   --elev-1: 0 6px 18px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.12);
