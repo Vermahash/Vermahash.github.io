@@ -92,6 +92,7 @@
             color: rgba(255, 255, 255, 0.3); text-transform: uppercase;
             font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
             letter-spacing: 2px; opacity: 0; transition: opacity 1s;
+            pointer-events: none; /* Ensure text doesn't block clicks */
         }
         body.active .controls-hint { opacity: 1; }
 
@@ -108,7 +109,6 @@
         }
         .nav-links a:hover { color: #fff; border-color: #00f3ff; text-shadow: 0 0 10px #00f3ff; }
 
-        /* Mobile Adjustments */
         @media(max-width: 768px) {
             h1 { font-size: 3rem; }
             .nav-links { width: 100%; justify-content: center; right: 0; top: 20px; gap: 15px; }
@@ -123,7 +123,7 @@
 
     <div id="ui-layer">
         <div class="nav-links">
-            <a href="assets/resume/Harsh_P_Verma_ds.pdf" target="_blank">Resume</a>
+            <a href="assets/resume/Harsh_Verma_Resume.pdf" target="_blank">Resume</a>
             <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
             <a href="https://linkedin.com/in/veharsh" target="_blank">LinkedIn</a>
             <a href="https://github.com/Vermahash" target="_blank">GitHub</a>
@@ -131,15 +131,15 @@
 
         <div class="hero-text" id="hero">
             <h1>Harsh Verma</h1>
-            <div class="role">Neural Interface for Portfolio</div>
+            <div class="role">Structured Neural Interface</div>
             <button class="btn-enter" id="initBtn">Initialize Cortex</button>
         </div>
         
-        <div class="controls-hint">Drag to Rotate • Click Active Nodes • Each Neural Node Has Projects Linked</div>
+        <div class="controls-hint">Drag to Rotate • Click Active Nodes</div>
     </div>
 
     <div id="project-modal">
-        <div class="close-btn" id="closeModal">&times;</div
+        <div class="close-btn" id="closeModal">&times;</div>
         <div id="modal-cat">CATEGORY</div>
         <h2 id="modal-title">PROJECT</h2>
         <div id="modal-stack">STACK</div>
@@ -157,8 +157,7 @@
             particleCount: 6000,
             colorTissue: 0x003344,
             colorOutline: 0x006677,
-            camStart: 55,       // UPDATED: Reduced from 100 to 55 for a closer starting view
-            // camEnd is calculated dynamically in the activate() function
+            camStart: 100
         };
 
         // --- ZONED PROJECT DATA ---
@@ -294,7 +293,7 @@
             controls.dampingFactor = 0.05;
             controls.autoRotate = true;
             controls.autoRotateSpeed = 1.0;
-            controls.enableZoom = true; // Allow zooming after init
+            controls.enableZoom = true;
             controls.enabled = false;
 
             brainGroup = new THREE.Group();
@@ -340,14 +339,12 @@
             const colorTissue = new THREE.Color(config.colorTissue);
             const colorOutline = new THREE.Color(config.colorOutline);
 
-            // 1. Inner Volume
             for(let i=0; i<config.particleCount * 0.6; i++) {
                 const p = getBrainPoint(1.5);
                 pos.push(p.x, p.y, p.z);
                 colors.push(colorTissue.r, colorTissue.g, colorTissue.b);
             }
 
-            // 2. Outer Shell
             for(let i=0; i<config.particleCount * 0.4; i++) {
                 const u = Math.random();
                 const v = Math.random();
@@ -419,7 +416,7 @@
             projects.forEach(data => {
                 const p = getZonePosition(data.zone);
                 
-                // Glow Sprite
+                // 1. GLOWING SPRITE
                 const spriteMat = new THREE.SpriteMaterial({ 
                     map: glowTex, color: 0x00f3ff, 
                     transparent: true, opacity: 1, blending: THREE.AdditiveBlending 
@@ -432,16 +429,20 @@
                 brainGroup.add(sprite);
                 interactables.push(sprite);
 
-                // Invisible Click Target
-                const coreGeo = new THREE.SphereGeometry(0.8, 16, 16);
-                const coreMat = new THREE.MeshBasicMaterial({ visible: false });
+                // 2. INVISIBLE CLICK TARGET (FIXED: Opacity 0 instead of Visible False)
+                const coreGeo = new THREE.SphereGeometry(1.2, 16, 16); // Larger hit area
+                const coreMat = new THREE.MeshBasicMaterial({ 
+                    color: 0xffffff, 
+                    transparent: true, 
+                    opacity: 0 // Invisible but clickable
+                });
                 const core = new THREE.Mesh(coreGeo, coreMat);
                 core.position.copy(sprite.position);
                 core.userData = data;
                 brainGroup.add(core);
                 interactables.push(core);
 
-                // Synaptic Line to Center
+                // 3. SYNAPTIC LINE
                 const points = [];
                 points.push(new THREE.Vector3(0, 0, 0)); 
                 points.push(new THREE.Vector3(p.x, p.y, p.z)); 
@@ -474,16 +475,14 @@
             isActive = true;
             controls.enabled = true;
             
-            // RESPONSIVE ZOOM CALCULATION
-            // If screen is narrow (Mobile), zoom out further (Higher Z)
-            // If screen is wide (Desktop), zoom in closer (Lower Z)
+            // RESPONSIVE ZOOM
             const aspect = window.innerWidth / window.innerHeight;
-            let targetZ = 18; // Default for Desktop
+            let targetZ = 24; // Desktop Closer Zoom
             
-            if(aspect < 0.75) { // Mobile Portrait
-                targetZ = 10;
+            if(aspect < 0.75) { // Mobile
+                targetZ = 40;
             } else if (aspect < 1.2) { // Tablet
-                targetZ = 24;
+                targetZ = 33;
             }
 
             new TWEEN.Tween(camera.position)
