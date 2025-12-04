@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Verma | Nebula Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & CORE --- */
+        body { margin: 0; overflow: hidden; background-color: #020205; font-family: 'Montserrat', sans-serif; }
+        
+        /* --- UI LAYER --- */
+        #ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10;
+        }
+
+        /* --- HERO --- */
+        .hero-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; color: white;
+            pointer-events: auto; transition: opacity 1.5s ease;
+        }
+        
+        body.active .hero-text { opacity: 0; pointer-events: none; }
+
+        h1 {
+            font-family: 'Cinzel', serif; font-size: 5rem; margin: 0;
+            font-weight: 700; letter-spacing: 10px;
+            background: linear-gradient(to bottom, #fff 30%, #aaccff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(100, 200, 255, 0.3);
+        }
+        
+        .role {
+            font-size: 1.1rem; letter-spacing: 6px; text-transform: uppercase;
+            margin-top: 15px; color: #aaccff; opacity: 0.8;
+        }
+
+        /* --- BLACK HOLE BUTTON --- */
+        .btn-enter {
+            margin-top: 60px; padding: 18px 50px;
+            background: rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; font-family: 'Montserrat', sans-serif;
+            font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+            cursor: pointer; transition: all 0.5s ease;
+            backdrop-filter: blur(5px); border-radius: 50px;
+        }
+        .btn-enter:hover {
+            background: #fff; color: #000;
+            box-shadow: 0 0 40px rgba(255,255,255,0.4);
+            transform: scale(1.05); border-color: #fff;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-links {
+            position: absolute; bottom: 40px; left: 50px; pointer-events: auto;
+        }
+        .nav-links a {
+            color: rgba(255,255,255,0.4); text-decoration: none;
+            margin-right: 30px; font-size: 0.8rem; letter-spacing: 2px;
+            text-transform: uppercase; transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px white; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 1px;
+            bottom: -5px; left: 0; background-color: white; transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- MODAL --- */
+        #project-modal {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 500px; max-width: 90%;
+            background: rgba(8, 8, 12, 0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 50px; color: white; z-index: 20;
+            opacity: 0; pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+            border-left: 4px solid #fff; backdrop-filter: blur(10px);
+        }
+        
+        #project-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+        #modal-title { font-family: 'Cinzel', serif; font-size: 2.2rem; margin: 0 0 10px 0; color: #fff; }
+        #modal-stack { font-size: 0.8rem; color: #00f3ff; margin-bottom: 25px; letter-spacing: 1px; text-transform: uppercase; }
+        #modal-desc { font-size: 1rem; line-height: 1.8; color: #ccc; margin-bottom: 40px; font-weight: 300; }
+        
+        .modal-btn {
+            background: white; color: black; padding: 15px 35px;
+            text-decoration: none; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 0.8rem; transition: 0.3s;
+            display: inline-block;
+        }
+        .modal-btn:hover { background: #00f3ff; color: #000; box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            width: 30px; height: 30px; cursor: pointer; opacity: 0.5; transition: 0.3s;
+        }
+        .close-btn:hover { opacity: 1; transform: rotate(90deg); }
+        .close-btn::before, .close-btn::after {
+            content: ''; position: absolute; top: 14px; left: 0;
+            width: 30px; height: 2px; background: white;
+        }
+        .close-btn::before { transform: rotate(45deg); }
+        .close-btn::after { transform: rotate(-45deg); }
+
+        /* --- HINT --- */
+        .controls-hint {
+            position: absolute; bottom: 30px; width: 100%; text-align: center;
+            color: rgba(255,255,255,0.3); text-transform: uppercase;
+            font-size: 0.7rem; letter-spacing: 3px;
+            opacity: 0; transition: opacity 1s;
+        }
+        body.active .controls-hint { opacity: 1; }
+
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div class="hero-text" id="hero">
+            <h1>Harsh Verma</h1>
+            <div class="role">Data Science | Business Analytics</div>
+            <button class="btn-enter" id="initBtn">Initialize System</button>
+        </div>
+
+        <div class="nav-links">
+            <a href="assets/resume/Harsh_Verma_Resume.pdf" target="_blank">Resume</a>
+            <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
+            <a href="https://linkedin.com/in/veharsh" target="_blank">LinkedIn</a>
+        </div>
+        
+        <div class="controls-hint">Drag to Rotate • Scroll to Zoom • Click Suns for Data</div>
+    </div>
+
+    <div id="project-modal">
+        <div class="close-btn" id="closeModal"></div>
+        <h2 id="modal-title">Project Name</h2>
+        <div id="modal-stack">Stack Info</div>
+        <p id="modal-desc">Description goes here.</p>
+        <a href="#" id="modal-link" target="_blank" class="modal-btn">View Code</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
+    <script>
+        // --- CONFIGURATION ---
+        const config = {
+            starCount: 6000,
+            fogColor: 0x020205,
+            camStartZ: 100,
+            camEndZ: 40
+        };
+
+        // --- RESUME DATA ---
+        const projects = [
+            {
+                title: "House Price API",
+                desc: "Regression model deployed on AWS EC2. Engineered 16 features from 247k records. Best model (MLPRegressor) achieved R² 0.98.",
+                stack: "AWS EC2 • Python • XGBoost",
+                url: "https://github.com/Vermahash",
+                color: 0xff3333,
+                pos: { x: 30, y: 10, z: 0 }
+            },
+            {
+                title: "RAG Chatbot",
+                desc: "Retrieval-Augmented Generation. Ingests PDFs, splits 7k+ chunks, and uses LLaMA 3 + FAISS for grounded answers.",
+                stack: "LLaMA 3 • LangChain • FAISS",
+                url: "https://github.com/Vermahash/pdf_chatbot",
+                color: 0x3366ff,
+                pos: { x: -30, y: 15, z: 10 }
+            },
+            {
+                title: "Job Match AI",
+                desc: "Local Zero-Cost workflow. Uses n8n and Ollama to compare resumes against JDs, outputting structured JSON scores.",
+                stack: "n8n • Ollama • Automation",
+                url: "https://github.com/Vermahash",
+                color: 0x33ff66,
+                pos: { x: 0, y: -20, z: 15 }
+            },
+            {
+                title: "Insurance Predictor",
+                desc: "Full ML Lifecycle. Random Forest Classifier wrapped in Docker and exposed via FastAPI for real-time risk tiers.",
+                stack: "FastAPI • Docker • Scikit-Learn",
+                url: "https://github.com/Vermahash/FastAPI_ML",
+                color: 0xffaa00,
+                pos: { x: 20, y: -10, z: -25 }
+            },
+            {
+                title: "News Intelligence",
+                desc: "Automated scraper. Pulls from NPR, summarizes with BART, and performs VADER sentiment analysis.",
+                stack: "BART • NLTK • Selenium",
+                url: "https://github.com/Vermahash/Web_Scrapping",
+                color: 0x00ffff,
+                pos: { x: -25, y: -5, z: -20 }
+            }
+        ];
+
+        // --- GLOBALS ---
+        let scene, camera, renderer, controls;
+        let starSystem, galaxyGroup;
+        let raycaster, mouse;
+        let interactables = [];
+        let isExplored = false;
+
+        // --- INITIALIZATION ---
+        function init() {
+            // Scene
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(config.fogColor, 0.015);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = config.camStartZ;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Controls (OrbitControls)
+            // Note: In standard script mode, OrbitControls attaches to the THREE namespace
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = true;
+            controls.autoRotate = true; // Gentle spin
+            controls.autoRotateSpeed = 0.5;
+            controls.enabled = false; // Disable until "Initialize" is clicked
+
+            // Group for rotating elements
+            galaxyGroup = new THREE.Group();
+            scene.add(galaxyGroup);
+
+            // Helpers
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            // Create World
+            createStarField();
+            createProjectSuns();
+
+            // Listeners
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('click', onClick);
+            
+            // UI Hooks
+            document.getElementById('initBtn').addEventListener('click', startExplore);
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+
+            // Animation Loop
+            animate();
+        }
+
+        // --- OBJECT CREATION: STARS ---
+        function createStarField() {
+            const geometry = new THREE.BufferGeometry();
+            const positions = [];
+            const colors = [];
+
+            for (let i = 0; i < config.starCount; i++) {
+                // Sphere distribution
+                const r = 120 * Math.cbrt(Math.random());
+                const theta = Math.random() * 2 * Math.PI;
+                const phi = Math.acos(2 * Math.random() - 1);
+                
+                const x = r * Math.sin(phi) * Math.cos(theta);
+                const y = r * Math.sin(phi) * Math.sin(theta);
+                const z = r * Math.cos(phi);
+                
+                positions.push(x, y, z);
+
+                // Colors: Mix of white, blue-ish, gold-ish
+                const colorType = Math.random();
+                if(colorType > 0.9) { colors.push(0.8, 0.9, 1); } // Blue
+                else if (colorType > 0.7) { colors.push(1, 0.9, 0.7); } // Gold
+                else { colors.push(1, 1, 1); } // White
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            // Generate circular texture programmatically
+            const canvas = document.createElement('canvas');
+            canvas.width = 32; canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(16,16,0,16,16,16);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0,0,32,32);
+            const texture = new THREE.CanvasTexture(canvas);
+
+            const material = new THREE.PointsMaterial({
+                size: 0.4,
+                map: texture,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending
+            });
+
+            starSystem = new THREE.Points(geometry, material);
+            galaxyGroup.add(starSystem);
+        }
+
+        // --- OBJECT CREATION: PROJECT SUNS ---
+        function createProjectSuns() {
+            // Glow Texture
+            const canvas = document.createElement('canvas');
+            canvas.width = 128; canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(64,64,0,64,64,64);
+            grad.addColorStop(0, 'rgba(255,255,255,1)');
+            grad.addColorStop(0.2, 'rgba(255,255,255,0.5)');
+            grad.addColorStop(0.5, 'rgba(255,255,255,0.1)');
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0,0,128,128);
+            const glowTexture = new THREE.CanvasTexture(canvas);
+
+            projects.forEach(data => {
+                // 1. The Core Sphere
+                const geo = new THREE.SphereGeometry(1.5, 32, 32);
+                const mat = new THREE.MeshBasicMaterial({ color: data.color });
+                const sphere = new THREE.Mesh(geo, mat);
+                sphere.position.set(data.pos.x, data.pos.y, data.pos.z);
+                sphere.userData = data;
+
+                // 2. The Glow Sprite (Lens Flare)
+                const spriteMat = new THREE.SpriteMaterial({ 
+                    map: glowTexture, 
+                    color: data.color, 
+                    transparent: true, 
+                    blending: THREE.AdditiveBlending,
+                    opacity: 0.7
+                });
+                const sprite = new THREE.Sprite(spriteMat);
+                sprite.scale.set(12, 12, 1);
+                sphere.add(sprite);
+
+                // 3. Point Light (casts light on nearby dust/stars)
+                const light = new THREE.PointLight(data.color, 1.5, 30);
+                sphere.add(light);
+
+                galaxyGroup.add(sphere);
+                interactables.push(sphere);
+            });
+        }
+
+        // --- LOGIC ---
+        function startExplore() {
+            document.body.classList.add('active');
+            isExplored = true;
+            controls.enabled = true; // Enable drag
+
+            // Tween Camera Z
+            new TWEEN.Tween(camera.position)
+                .to({ z: config.camEndZ }, 2000)
+                .easing(TWEEN.Easing.Cubic.Out)
+                .start();
+        }
+
+        function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onClick() {
+            if(!isExplored) return;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(interactables);
+
+            if (intersects.length > 0) {
+                const data = intersects[0].object.userData;
+                openModal(data);
+            } else {
+                // Optional: Close modal if clicking space? 
+                // Currently keeping it explicit via X button for better UX
+            }
+        }
+
+        function openModal(data) {
+            const modal = document.getElementById('project-modal');
+            const title = document.getElementById('modal-title');
+            
+            title.innerText = data.title;
+            title.style.color = '#' + data.color.toString(16);
+            document.getElementById('modal-stack').innerText = data.stack;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-link').href = data.url;
+            
+            modal.style.borderLeftColor = '#' + data.color.toString(16);
+            modal.classList.add('open');
+            controls.autoRotate = false; // Stop spinning while reading
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').classList.remove('open');
+            controls.autoRotate = true; // Resume spin
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // --- ANIMATION ---
+        function animate(time) {
+            requestAnimationFrame(animate);
+            TWEEN.update(time);
+            controls.update(); // Required for OrbitControls damping
+
+            // Gentle pulsation for suns
+            const pulse = 1 + Math.sin(time * 0.002) * 0.1;
+            interactables.forEach(sun => {
+                sun.children[0].scale.set(12 * pulse, 12 * pulse, 1);
+            });
+
+            // Hover Cursor Effect
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(interactables);
+            document.body.style.cursor = intersects.length > 0 ? 'pointer' : 'default';
+
+            renderer.render(scene, camera);
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
