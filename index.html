@@ -3,53 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harsh Verma | Cortex Interface</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Harsh Verma | Cortex Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        /* --- RESET & CORE --- */
+        /* --- CORE SETTINGS --- */
         body { margin: 0; overflow: hidden; background-color: #000205; font-family: 'Rajdhani', sans-serif; }
         
         /* --- UI LAYER --- */
         #ui-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 10;
-            background: radial-gradient(circle at center, transparent 0%, #000 130%);
+            background: radial-gradient(circle at center, transparent 0%, #000 140%);
         }
 
-        /* --- LOCK OVERLAY --- */
-        #input-lock {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); 
-            z-index: 9999; display: none; pointer-events: auto;
-            backdrop-filter: blur(2px);
-        }
-        #input-lock.active { display: block; }
-
-        /* --- HERO --- */
+        /* --- HERO SECTION --- */
         .hero-text {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             text-align: center; color: #00f3ff;
-            pointer-events: auto; transition: opacity 1s ease;
+            pointer-events: auto; transition: opacity 0.8s ease;
             width: 100%;
         }
         body.active .hero-text { opacity: 0; pointer-events: none; }
 
         h1 {
-            font-family: 'Share Tech Mono', monospace; font-size: 5rem; margin: 0;
+            font-family: 'Share Tech Mono', monospace; font-size: 4rem; margin: 0;
             text-shadow: 0 0 30px rgba(0, 243, 255, 0.5); text-transform: uppercase;
+            line-height: 1.1;
         }
         
         .role {
-            font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase;
+            font-size: 1.2rem; letter-spacing: 4px; text-transform: uppercase;
             margin-top: 15px; color: rgba(0, 243, 255, 0.7);
             border-top: 1px solid rgba(0, 243, 255, 0.3);
             display: inline-block; padding-top: 10px;
         }
 
-        /* --- BUTTON --- */
         .btn-enter {
-            margin-top: 60px; padding: 18px 50px;
+            margin-top: 50px; padding: 16px 45px;
             background: rgba(0, 10, 20, 0.8); border: 1px solid #00f3ff;
             color: #00f3ff; font-family: 'Share Tech Mono', monospace;
             font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase;
@@ -61,69 +52,88 @@
             box-shadow: 0 0 50px rgba(0, 243, 255, 0.8);
         }
 
-        /* --- MODAL --- */
-        #project-modal {
-            position: fixed; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 450px; max-width: 90%;
-            background: rgba(2, 8, 12, 0.98);
+        /* --- NAVIGATION DECK (Bottom) --- */
+        #nav-deck {
+            position: absolute; bottom: -100px; left: 50%;
+            transform: translateX(-50%);
+            display: flex; gap: 10px;
+            transition: bottom 1s cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: auto; z-index: 100;
+            background: rgba(0, 10, 15, 0.8);
+            padding: 10px 20px; border-top: 1px solid #00f3ff;
+            border-radius: 10px 10px 0 0;
+            backdrop-filter: blur(5px);
+        }
+        body.active #nav-deck { bottom: 0; }
+
+        .nav-btn {
+            background: transparent; border: none;
+            color: rgba(255,255,255,0.5); font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem; padding: 10px 15px; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-btn:hover, .nav-btn.active-tab { color: #00f3ff; text-shadow: 0 0 10px #00f3ff; }
+        .nav-btn.active-tab { border-bottom: 2px solid #00f3ff; }
+
+        /* --- CONTENT PANELS (Holographic Overlays) --- */
+        .holo-panel {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            width: 800px; max-width: 90%; max-height: 80vh;
+            background: rgba(2, 8, 12, 0.95);
             border: 1px solid #00f3ff;
             border-left: 6px solid #00f3ff;
-            padding: 30px; color: #fff; 
-            z-index: 10000; 
+            padding: 40px; color: #fff; z-index: 50;
             opacity: 0; pointer-events: none;
             transition: all 0.3s;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+            overflow-y: auto; display: none;
         }
         
-        #project-modal.visible { 
-            opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); 
+        .holo-panel.visible { 
+            display: block; opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); 
         }
 
-        #modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        #modal-id { font-family: 'Share Tech Mono', monospace; font-size: 2.5rem; color: rgba(0, 243, 255, 0.15); line-height: 1;}
-        #modal-cat { font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; color: #88ccff; opacity: 0.8; }
-        #modal-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 2rem; color: #fff; margin: 0 0 15px 0; text-transform: uppercase; }
-        #modal-stack { font-size: 0.85rem; color: #00f3ff; margin-bottom: 25px; font-family: 'Share Tech Mono', monospace; letter-spacing: 1px;}
-        #modal-desc { font-size: 1rem; line-height: 1.6; color: #ccc; margin-bottom: 30px; }
-        
-        .modal-btn {
-            padding: 12px 30px; border: 1px solid #00f3ff;
-            color: #00f3ff; text-decoration: none;
-            font-family: 'Share Tech Mono', monospace; text-transform: uppercase;
-            transition: 0.3s; display: inline-block; font-size: 0.9rem; cursor: pointer;
+        /* Project Specific Styles */
+        #project-modal { width: 450px; }
+
+        /* Typography */
+        h2 { font-family: 'Share Tech Mono'; color: #00f3ff; font-size: 2rem; margin-top: 0; border-bottom: 1px solid rgba(0,243,255,0.3); padding-bottom: 10px; }
+        h3 { color: #fff; font-size: 1.2rem; margin-bottom: 5px; margin-top: 20px;}
+        .sub-text { color: #88ccff; font-size: 0.9rem; font-family: 'Share Tech Mono'; text-transform: uppercase; margin-bottom: 10px; display: block;}
+        p, li { color: #ccc; line-height: 1.6; font-size: 1rem; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+
+        /* Grid for Skills */
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+        .skill-item { 
+            background: rgba(0, 243, 255, 0.05); border: 1px solid rgba(0, 243, 255, 0.2); 
+            padding: 10px; text-align: center; color: #fff; font-size: 0.9rem;
         }
-        .modal-btn:hover { background: #00f3ff; color: #000; box-shadow: 0 0 20px rgba(0,243,255,0.4); }
-        
-        .close-btn { 
-            cursor: pointer; color: #555; font-size: 2rem; line-height: 1rem; transition: 0.2s; 
-        }
+
+        .close-btn { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #555; font-size: 1.5rem; }
         .close-btn:hover { color: #fff; }
 
-        /* --- HINT & NAV --- */
-        .controls-hint {
-            position: absolute; bottom: 30px; width: 100%; text-align: center;
-            color: rgba(255, 255, 255, 0.3); text-transform: uppercase;
-            font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
-            letter-spacing: 2px; opacity: 0; transition: opacity 1s; pointer-events: none;
+        .action-btn {
+            display: inline-block; padding: 10px 25px; border: 1px solid #00f3ff;
+            color: #00f3ff; text-decoration: none; font-family: 'Share Tech Mono';
+            text-transform: uppercase; margin-top: 20px; transition: 0.3s;
         }
-        body.active .controls-hint { opacity: 1; }
+        .action-btn:hover { background: #00f3ff; color: #000; }
 
-        .nav-links {
-            position: absolute; top: 40px; right: 50px;
-            display: flex; gap: 30px; pointer-events: auto;
-            flex-wrap: wrap; justify-content: flex-end; z-index: 20;
-        }
-        .nav-links a {
-            color: rgba(0, 243, 255, 0.5); text-decoration: none;
-            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
-            transition: 0.3s; border-bottom: 1px solid transparent;
-        }
-        .nav-links a:hover { color: #fff; border-color: #00f3ff; text-shadow: 0 0 10px #00f3ff; }
+        /* Scrollbar */
+        .holo-panel::-webkit-scrollbar { width: 8px; }
+        .holo-panel::-webkit-scrollbar-thumb { background: #003344; }
+        .holo-panel::-webkit-scrollbar-track { background: #000; }
 
+        /* Mobile Responsive */
         @media(max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .nav-links { width: 100%; justify-content: center; right: 0; top: 20px; gap: 15px; }
+            h1 { font-size: 2.5rem; }
+            #nav-deck { width: 100%; justify-content: center; border-radius: 0; padding: 10px 5px; flex-wrap: wrap; bottom: -150px;}
+            .nav-btn { font-size: 0.75rem; padding: 8px 10px; }
+            .holo-panel { width: 95%; padding: 25px; max-height: 70vh; }
         }
 
     </style>
@@ -131,35 +141,100 @@
 <body>
 
     <div id="canvas-container"></div>
-    <div id="input-lock"></div>
 
     <div id="ui-layer">
-        <div class="nav-links">
-            <a href="assets/resume/Harsh_Verma_DS.pdf" target="_blank">Resume</a>
-            <a href="mailto:hverma4@pride.hofstra.edu">Email</a>
-            <a href="https://linkedin.com/in/veharsh" target="_blank">LinkedIn</a>
-            <a href="https://github.com/Vermahash" target="_blank">GitHub</a>
-        </div>
-
         <div class="hero-text" id="hero">
             <h1>Harsh Verma</h1>
-            <div class="role">Structured Neural Interface</div>
+            <div class="role">Neural Interface V.21</div>
             <button class="btn-enter" id="initBtn">Initialize Cortex</button>
         </div>
-        
-        <div class="controls-hint">Drag to Rotate • Click Numbered Nodes</div>
     </div>
 
-    <div id="project-modal">
-        <div id="modal-header">
-            <div id="modal-id">00</div>
-            <div class="close-btn" id="closeModal">&times;</div>
+    <div id="nav-deck">
+        <button class="nav-btn active-tab" onclick="switchMode('brain')">Neural Map</button>
+        <button class="nav-btn" onclick="switchMode('experience')">Memory Logs</button>
+        <button class="nav-btn" onclick="switchMode('skills')">Protocols</button>
+        <button class="nav-btn" onclick="switchMode('about')">Identity</button>
+    </div>
+
+    <div id="project-modal" class="holo-panel">
+        <div class="close-btn" onclick="closeAllPanels()">&times;</div>
+        <div id="modal-cat" class="sub-text">CATEGORY</div>
+        <h2 id="modal-title">PROJECT TITLE</h2>
+        <div id="modal-stack" class="sub-text" style="color: #fff;">STACK INFO</div>
+        <p id="modal-desc">Description goes here.</p>
+        <a href="#" id="modal-link" target="_blank" class="action-btn">Access Repository</a>
+    </div>
+
+    <div id="experience-panel" class="holo-panel">
+        <div class="close-btn" onclick="closeAllPanels()">&times;</div>
+        <h2>Professional Memory Logs</h2>
+        
+        <h3>Optimum (Altice USA) | Data Analytics Intern</h3>
+        <span class="sub-text">Feb 2025 – May 2025 | New York</span>
+        <ul>
+            <li>Automated executive Power BI dashboards with SQL/Python ETL, cutting reporting time by 70%.</li>
+            <li>Designed predictive ROI-risk model surfacing shortfalls 8 weeks early across 5+ channels.</li>
+            <li>Built VBA automation uniting FP&A and operations for ROI forecasts on $20M+ initiatives.</li>
+        </ul>
+
+        <div style="border-top: 1px solid #333; margin: 20px 0;"></div>
+
+        <h3>Deloitte (Offices of the US) | Analyst</h3>
+        <span class="sub-text">May 2021 – Aug 2023 | India</span>
+        <ul>
+            <li>Migrated 1M+ records for AT&T/Wells Fargo with custom ETL to Workday at 98% accuracy.</li>
+            <li>Automated 100+ SQL scripts reducing processing time by 40%.</li>
+            <li>Built error-detection & monitoring to cut mismatches (−25%) and reduce support tickets.</li>
+        </ul>
+    </div>
+
+    <div id="skills-panel" class="holo-panel">
+        <div class="close-btn" onclick="closeAllPanels()">&times;</div>
+        <h2>Active Protocols (Skills)</h2>
+        
+        <h3>Languages & Core</h3>
+        <div class="skill-grid">
+            <div class="skill-item">Python</div>
+            <div class="skill-item">SQL</div>
+            <div class="skill-item">R</div>
+            <div class="skill-item">Excel (Adv)</div>
         </div>
-        <div id="modal-cat">CATEGORY</div>
-        <h2 id="modal-title">PROJECT</h2>
-        <div id="modal-stack">STACK</div>
-        <p id="modal-desc">Description.</p>
-        <a href="#" id="modal-link" target="_blank" class="modal-btn">Access Code</a>
+
+        <h3>Machine Learning & AI</h3>
+        <div class="skill-grid">
+            <div class="skill-item">Predictive Modeling</div>
+            <div class="skill-item">LLM / RAG</div>
+            <div class="skill-item">LangChain</div>
+            <div class="skill-item">TensorFlow</div>
+            <div class="skill-item">Scikit-Learn</div>
+        </div>
+
+        <h3>Data Engineering & BI</h3>
+        <div class="skill-grid">
+            <div class="skill-item">Tableau</div>
+            <div class="skill-item">Power BI</div>
+            <div class="skill-item">AWS (EC2)</div>
+            <div class="skill-item">Docker</div>
+            <div class="skill-item">FastAPI</div>
+        </div>
+    </div>
+
+    <div id="about-panel" class="holo-panel">
+        <div class="close-btn" onclick="closeAllPanels()">&times;</div>
+        <h2>Identity Matrix</h2>
+        <p><strong>Status:</strong> MS in Business Analytics Graduate</p>
+        <p><strong>Location:</strong> Uniondale, New York</p>
+        <p><strong>Mission:</strong> Bridging the gap between raw data and business strategy. I specialize in deploying AI chatbots, ML applications, and analytics that drive decision-making.</p>
+        
+        <h3>Education</h3>
+        <p><strong>Hofstra University</strong> - MS in Business Analytics (STEM) [GPA 3.87]</p>
+        <p><strong>Manipal University</strong> - B.Tech in Computer Communication</p>
+
+        <div style="margin-top: 30px;">
+            <a href="mailto:hverma4@pride.hofstra.edu" class="action-btn">Initialize Contact</a>
+            <a href="assets/resume/Harsh_Verma_Resume.pdf" target="_blank" class="action-btn" style="margin-left: 10px;">Download Resume</a>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -175,7 +250,6 @@
             camStart: 100,
         };
 
-        // --- PROJECT DATA ---
         const projects = [
             { id: "01", cat: "LLM / AI", title: "RAG Chatbot", desc: "Context-aware chatbot using LLaMA 3, LangChain, and FAISS vector stores to query PDF documents.", stack: "LLaMA 3 • LangChain • FAISS", url: "https://github.com/Vermahash/pdf_chatbot", zone: "left" },
             { id: "02", cat: "LLM / AI", title: "Property Ranker", desc: "Hybrid LLM + Similarity ranking. Uses vector embeddings and topic segmentation for real estate.", stack: "Ollama • Embeddings • FastAPI", url: "https://github.com/Vermahash", zone: "left" },
@@ -191,13 +265,12 @@
             { id: "12", cat: "UNSUPERVISED LEARNING", title: "Ensemble Methods", desc: "Advanced clustering and dimensionality reduction using PCA and Ensemble techniques.", stack: "PCA • Clustering • Scikit-Learn", url: "https://github.com/Vermahash", zone: "center" }
         ];
 
-        // --- GLOBALS ---
         let scene, camera, renderer, controls;
         let brainGroup;
         let raycaster, mouse;
         let interactables = [];
         let isActive = false;
-        const placedPositions = []; 
+        let placedPositions = [];
 
         function init() {
             scene = new THREE.Scene();
@@ -230,14 +303,29 @@
 
             window.addEventListener('resize', onResize);
             window.addEventListener('mousemove', onMouseMove);
+            // MOBILE FIX: Add touchstart listener
+            window.addEventListener('touchstart', onTouchStart, {passive: false});
             window.addEventListener('click', onClick);
+            
             document.getElementById('initBtn').addEventListener('click', activate);
-            document.getElementById('closeModal').addEventListener('click', closeModal);
-
+            
             animate();
         }
 
-        // --- GEOMETRY UTILS ---
+        // --- MOBILE TOUCH HANDLER ---
+        function onTouchStart(event) {
+            if(!isActive) return;
+            // Get touch coordinates
+            const x = event.changedTouches[0].clientX;
+            const y = event.changedTouches[0].clientY;
+            
+            // Convert to normalized 3D space (-1 to +1)
+            mouse.x = (x / window.innerWidth) * 2 - 1;
+            mouse.y = -(y / window.innerHeight) * 2 + 1;
+            
+            checkIntersection(); // Trigger click logic
+        }
+
         function getBrainPoint(randomness = 0) {
             const u = Math.random();
             const v = Math.random();
@@ -256,8 +344,7 @@
         }
 
         function getDynamicPosition(zone) {
-            let p, isValid = false;
-            let attempts = 0;
+            let p, isValid = false, attempts = 0;
             const checkZone = (p, z) => {
                 if(z === 'left') return p.x < -2;
                 if(z === 'right') return p.x > 2;
@@ -266,7 +353,6 @@
                 if(z === 'center') return Math.abs(p.x) < 3 && Math.abs(p.z) < 3;
                 return true;
             };
-
             while(!isValid && attempts < 100) {
                 p = getBrainPoint(0.2);
                 attempts++;
@@ -309,7 +395,6 @@
                 pos.push(x, y, z);
                 colors.push(colorOutline.r * 2, colorOutline.g * 2, colorOutline.b * 2);
             }
-
             geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
             geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
             const mat = new THREE.PointsMaterial({ size: 0.12, vertexColors: true, transparent: true, opacity: 0.6 });
@@ -319,11 +404,9 @@
 
         function createProjects() {
             const glowTex = createGlowTexture();
-            
             projects.forEach(data => {
                 const p = getDynamicPosition(data.zone);
-
-                // 1. Glow
+                
                 const spriteMat = new THREE.SpriteMaterial({ map: glowTex, color: 0x00f3ff, transparent: true, opacity: 1, blending: THREE.AdditiveBlending });
                 const sprite = new THREE.Sprite(spriteMat);
                 sprite.position.set(p.x, p.y, p.z);
@@ -332,17 +415,16 @@
                 brainGroup.add(sprite);
                 interactables.push(sprite);
 
-                // 2. Number Label (High visibility)
+                // Num (DepthTest False for visibility)
                 const numTex = createNumberTexture(data.id);
-                // depthTest: false ensures it renders ON TOP of everything
                 const numMat = new THREE.SpriteMaterial({ map: numTex, transparent: true, opacity: 1, depthTest: false });
                 const numSprite = new THREE.Sprite(numMat);
-                numSprite.position.set(p.x + 0.8, p.y + 0.8, p.z + 0.8);
+                numSprite.position.set(p.x+0.8, p.y+0.8, p.z+0.8);
                 numSprite.scale.set(2, 2, 1);
-                numSprite.renderOrder = 999; // Draw last
+                numSprite.renderOrder = 999;
                 brainGroup.add(numSprite);
 
-                // 3. Invisible Target
+                // Invisible Core
                 const coreGeo = new THREE.SphereGeometry(1.5, 16, 16);
                 const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 }); 
                 const core = new THREE.Mesh(coreGeo, coreMat);
@@ -351,7 +433,6 @@
                 brainGroup.add(core);
                 interactables.push(core);
 
-                // 4. Line
                 const points = [new THREE.Vector3(0,0,0), new THREE.Vector3(p.x, p.y, p.z)];
                 const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
                 const lineMat = new THREE.LineBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.15 });
@@ -375,41 +456,31 @@
 
         function createNumberTexture(num) {
             const canvas = document.createElement('canvas');
-            canvas.width = 128; canvas.height = 128; // Higher res
+            canvas.width = 128; canvas.height = 128;
             const ctx = canvas.getContext('2d');
-            
-            // Background backing for visibility
             ctx.beginPath();
             ctx.arc(64, 64, 40, 0, 2 * Math.PI);
             ctx.fillStyle = "rgba(0, 5, 10, 0.8)";
             ctx.fill();
-            
-            // Border
             ctx.lineWidth = 4;
             ctx.strokeStyle = "#00f3ff";
             ctx.stroke();
-
-            // Text
             ctx.fillStyle = "#fff";
             ctx.font = "bold 50px 'Share Tech Mono', monospace";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(num, 64, 68);
-            
             return new THREE.CanvasTexture(canvas);
         }
 
-        // --- INTERACTION ---
         function activate() {
             document.body.classList.add('active');
             isActive = true;
             controls.enabled = true;
-            
             const aspect = window.innerWidth / window.innerHeight;
             let targetZ = 24; 
             if(aspect < 0.75) targetZ = 40; 
             else if (aspect < 1.2) targetZ = 33;
-
             new TWEEN.Tween(camera.position).to({ z: targetZ }, 2000).easing(TWEEN.Easing.Cubic.Out).start();
         }
 
@@ -419,39 +490,56 @@
         }
 
         function onClick() {
+            checkIntersection();
+        }
+
+        function checkIntersection() {
             if(!isActive) return;
             raycaster.setFromCamera(mouse, camera);
-            
             const intersects = raycaster.intersectObjects(interactables);
             
             if(intersects.length > 0) {
                 const data = intersects[0].object.userData;
-                
-                // Populate Modal
-                document.getElementById('modal-id').innerText = data.id;
+                // Populate Projects Modal
                 document.getElementById('modal-cat').innerText = data.cat;
                 document.getElementById('modal-title').innerText = data.title;
                 document.getElementById('modal-stack').innerText = data.stack;
                 document.getElementById('modal-desc').innerText = data.desc;
                 document.getElementById('modal-link').href = data.url;
                 
-                // Show UI
-                document.getElementById('project-modal').classList.add('visible');
-                document.getElementById('input-lock').classList.add('active'); // Block bg
-                
-                // Lock 3D controls
-                controls.enabled = false; 
-                controls.autoRotate = false;
+                openPanel('project-modal');
             }
         }
 
-        function closeModal() {
-            document.getElementById('project-modal').classList.remove('visible');
-            document.getElementById('input-lock').classList.remove('active');
-            
-            controls.enabled = true; 
-            controls.autoRotate = true;
+        // --- NAVIGATION SYSTEM ---
+        window.switchMode = function(mode) {
+            // Reset active tab styles
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-tab'));
+            event.target.classList.add('active-tab');
+
+            if(mode === 'brain') {
+                closeAllPanels();
+            } else if(mode === 'experience') {
+                openPanel('experience-panel');
+            } else if(mode === 'skills') {
+                openPanel('skills-panel');
+            } else if(mode === 'about') {
+                openPanel('about-panel');
+            }
+        };
+
+        function openPanel(id) {
+            closeAllPanels(); // Close others first
+            document.getElementById(id).classList.add('visible');
+            controls.autoRotate = false;
+            // controls.enabled = false; // Optional: Lock rotation when reading
         }
+
+        window.closeAllPanels = function() {
+            document.querySelectorAll('.holo-panel').forEach(p => p.classList.remove('visible'));
+            controls.autoRotate = true;
+            controls.enabled = true;
+        };
 
         function onResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -466,9 +554,12 @@
 
             const scale = 2.5 + Math.sin(time * 0.003) * 0.5;
             interactables.forEach(obj => {
-                if(obj.type === 'Sprite') obj.scale.set(scale, scale, 1);
+                if(obj.type === 'Sprite' && obj.renderOrder !== 999) { // Don't scale numbers
+                    obj.scale.set(scale, scale, 1);
+                }
             });
 
+            // Standard Raycast for Cursor
             raycaster.setFromCamera(mouse, camera);
             const hits = raycaster.intersectObjects(interactables);
             document.body.style.cursor = hits.length > 0 ? 'pointer' : 'default';
